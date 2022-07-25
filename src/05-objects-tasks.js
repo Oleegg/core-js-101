@@ -150,14 +150,15 @@ const cssSelectorBuilder = {
   },
 
   combine(/* selector1, combinator, selector2 */) {
-
+    throw new Error('Not implemented');
   },
 
   stringify() {
-    const a = this.val;
-    this.val = '';
-    console.log(this.comb);
-    return a;
+    // const a = this.val;
+    // this.val = '';
+    // console.log(this.comb);
+    // return a;
+    throw new Error('Not implemented');
   },
 };
 
