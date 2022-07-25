@@ -116,8 +116,6 @@ function fromJSON(proto, json) {
 const cssSelectorBuilder = {
 
   val: '',
-  res: '',
-  comb: '',
 
   element(value) {
     this.val += `${value}`;
@@ -154,11 +152,9 @@ const cssSelectorBuilder = {
   },
 
   stringify() {
-    // const a = this.val;
-    // this.val = '';
-    // console.log(this.comb);
-    // return a;
-    throw new Error('Not implemented');
+    const a = this.val;
+    this.val = '';
+    return a;
   },
 };
 
