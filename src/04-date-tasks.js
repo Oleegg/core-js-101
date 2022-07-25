@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return new Date(value);
 }
 
 /**
@@ -34,8 +34,8 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return new Date(value.toLocaleString());
 }
 
 
@@ -53,8 +53,11 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const d = date.getFullYear();
+  const mons = new Date(d, 1, 29).getDate();
+  if (mons === 29) return true;
+  return false;
 }
 
 
@@ -73,8 +76,19 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  let a = +endDate - +startDate;
+  const ms = a % 1000;
+  const mls = ms > 9 ? ms : `00${ms}`;
+  a -= ms;
+  const s = (a / 1000) % 60;
+  const sec = s < 1 ? '00' : s;
+  a -= s * 1000;
+  const m = ((a / 1000 / 60) % 60);
+  const min = m < 1 ? '00' : m;
+  const h = a / 1000 / 60 / 60;
+  const hours = h >= 1 ? `0${Math.floor(h)}` : '00';
+  return `${hours}:${min}:${sec}.${mls}`;
 }
 
 
@@ -94,8 +108,17 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  const h = date.getUTCHours();
+  const m = date.getUTCMinutes();
+  let res = 0.5 * (60 * h - 11 * m);
+  if (res > 360) {
+    res -= 360;
+  }
+  if (res > 180) {
+    res -= 360;
+  }
+  return Math.abs(res * (Math.PI / 180));
 }
 
 
